@@ -6,3 +6,13 @@ repos:
         entry: npm run lint
         language: system
         files: \.ts$
+      - id: format
+        name: format
+        entry: npx prettier --write .
+        language: system
+        files: \.(ts|tsx|json|yaml|yml|md|html|css|scss|js|jsx)$
+      - id: format-check
+        name: format-check
+        entry: npm run format-check
+        language: system
+        files: \.(ts|tsx|json|yaml|yml|md|html|css|scss|js|jsx)$

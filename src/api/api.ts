@@ -12,7 +12,7 @@ export function getClient(token: string): Octokit {
     userAgent: userAgent,
     baseUrl: getGitHubApiUri(),
     request: {
-      agent: getAgent(),
+      agent: getAgent()
     }
   });
 }

@@ -1,7 +1,7 @@
-import * as vscode from 'vscode';
-import { HttpsProxyAgent, HttpsProxyAgentOptions } from 'https-proxy-agent';
-import { Agent, AgentOptions } from 'https';
-import { loadSystemCertificates } from '@vscode/proxy-agent';
+import * as vscode from "vscode";
+import {HttpsProxyAgent, HttpsProxyAgentOptions} from "https-proxy-agent";
+import {Agent, AgentOptions} from "https";
+import {loadSystemCertificates} from "@vscode/proxy-agent";
 
 import {log, logDebug, logError} from "../log";
 
@@ -24,10 +24,10 @@ export async function initProxy() {
         } else {
           log(`ERROR: ${msg}`);
         }
-      },
+      }
     };
 
-    caCertificates = await loadSystemCertificates({ log: logger });
+    caCertificates = await loadSystemCertificates({log: logger});
     initialized = true;
   } catch (e) {
     logError(e as Error, "Failed to load system certificates");
@@ -36,15 +36,16 @@ export async function initProxy() {
 
 export function getAgent(): Agent | undefined {
   // Check for proxy setting in VS Code configuration first, then environment variables
-  const config = vscode.workspace.getConfiguration('http');
-  const proxy = config.get<string>('proxy') || 
-                process.env.HTTPS_PROXY || 
-                process.env.https_proxy || 
-                process.env.HTTP_PROXY || 
-                process.env.http_proxy;
+  const config = vscode.workspace.getConfiguration("http");
+  const proxy =
+    config.get<string>("proxy") ||
+    process.env.HTTPS_PROXY ||
+    process.env.https_proxy ||
+    process.env.HTTP_PROXY ||
+    process.env.http_proxy;
 
   const options: HttpsProxyAgentOptions<string> & AgentOptions = {
-    keepAlive: true,
+    keepAlive: true
   };
 
   if (caCertificates.length > 0) {
