@@ -3,6 +3,8 @@ import {HttpsProxyAgent, HttpsProxyAgentOptions} from "https-proxy-agent";
 import {Agent, AgentOptions} from "https";
 import {loadSystemCertificates} from "@vscode/proxy-agent";
 
+import * as fs from "fs";
+import {getSSLCaCert} from "../configuration/configuration";
 import {log, logDebug, logError} from "../log";
 
 let caCertificates: string[] = [];
@@ -28,6 +30,17 @@ export async function initProxy() {
     };
 
     caCertificates = await loadSystemCertificates({log: logger});
+
+    const customCaCert = getSSLCaCert();
+    if (customCaCert) {
+      try {
+        const cert = fs.readFileSync(customCaCert, {encoding: "utf-8"});
+        caCertificates.push(cert);
+      } catch (e) {
+        logError(e as Error, `Failed to load custom CA certificate from ${customCaCert}`);
+      }
+    }
+
     initialized = true;
   } catch (e) {
     logError(e as Error, "Failed to load system certificates");
