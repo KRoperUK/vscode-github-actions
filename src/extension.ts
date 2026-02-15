@@ -35,10 +35,14 @@ import {initTreeViews} from "./treeViews/treeViews";
 import {deactivateLanguageServer, initLanguageServer} from "./workflow/languageServer";
 import {registerSignIn} from "./commands/signIn";
 
+import {initProxy} from "./api/proxy";
+
 export async function activate(context: vscode.ExtensionContext) {
   initLogger();
 
   log("Activating GitHub Actions extension...");
+
+  await initProxy();
 
   const hasSession = !!(await getSession());
   const canReachAPI = hasSession && (await canReachGitHubAPI());

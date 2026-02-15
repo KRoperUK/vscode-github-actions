@@ -1,7 +1,8 @@
 import {Octokit} from "@octokit/rest";
-import {ProxyAgent} from "@vscode/proxy-agent";
 import {version} from "../../package.json";
 import {getGitHubApiUri} from "../configuration/configuration";
+
+import {getAgent} from "./proxy";
 
 export const userAgent = `VS Code GitHub Actions (${version})`;
 
@@ -11,7 +12,7 @@ export function getClient(token: string): Octokit {
     userAgent: userAgent,
     baseUrl: getGitHubApiUri(),
     request: {
-      agent: new ProxyAgent()
+      agent: getAgent(),
     }
   });
 }
