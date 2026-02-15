@@ -20,6 +20,9 @@ module.exports = (env, argv) => {
       }),
       new webpack.DefinePlugin({
         PRODUCTION: argv.mode === "production"
+      }),
+      new webpack.IgnorePlugin({
+        resourceRegExp: /@vscode\/windows-ca-certs/
       })
     ],
     resolve: {
@@ -85,6 +88,14 @@ module.exports = (env, argv) => {
   const webConfig = {
     ...config,
     target: "webworker",
+    plugins: [
+      ...config.plugins,
+      new webpack.NormalModuleReplacementPlugin(/(^|[\/\\])proxy(\.ts)?$/, resource => {
+        if (resource.context.includes("src")) {
+          resource.request = resource.request.replace(/proxy(\.ts)?$/, "proxy.web");
+        }
+      })
+    ],
     output: {
       path: path.resolve(__dirname, "dist"),
       filename: "extension-web.js",

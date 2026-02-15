@@ -1,18 +1,43 @@
 repos:
   - repo: local
     hooks:
+      - id: ci-check
+        name: ci-check
+        entry: npm ci
+        language: system
+        pass_filenames: false
+        always_run: true
       - id: lint
         name: lint
         entry: npm run lint
         language: system
-        files: \.ts$
+        pass_filenames: false
+        always_run: true
       - id: format
         name: format
-        entry: npx prettier --write .
+        entry: npx prettier --write
         language: system
         files: \.(ts|tsx|json|yaml|yml|md|html|css|scss|js|jsx)$
       - id: format-check
         name: format-check
-        entry: npm run format-check
+        entry: npx prettier --check
         language: system
         files: \.(ts|tsx|json|yaml|yml|md|html|css|scss|js|jsx)$
+      - id: test
+        name: test
+        entry: npm run test
+        language: system
+        pass_filenames: false
+        always_run: true
+      - id: build
+        name: build
+        entry: npm run build
+        language: system
+        pass_filenames: false
+        always_run: true
+      - id: prettier
+        name: prettier check
+        entry: npx prettier --check
+        language: system
+        files: \.(ts|js|json|md|yml|yaml)$
+        stages: [push]
