@@ -14,7 +14,7 @@ on:
         required: true
 jobs:
   check-version-change:
-    if: ${{ github.repository_owner == 'github' }}
+    if: ${{ github.repository_owner == 'KRoperUK' }}
 
     outputs:
       changed: ${{ steps.check-version.outputs.result }}
