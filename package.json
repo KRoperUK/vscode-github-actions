@@ -1,11 +1,11 @@
 {
-  "name": "@github/vscode-github-actions",
+  "name": "@kroperuk/vscode-github-actions",
   "displayName": "GitHub Actions",
-  "publisher": "github",
+  "publisher": "kroperuk",
   "icon": "resources/logo.png",
   "license": "MIT",
   "repository": {
-    "url": "https://github.com/github/vscode-github-actions"
+    "url": "https://github.com/kroperuk/vscode-github-actions"
   },
   "description": "GitHub Actions workflows and runs for github.com hosted repositories in VS Code",
   "version": "0.32.0",
