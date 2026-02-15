@@ -142,10 +142,16 @@ jobs:
         with:
           name: vscode-github-actions-${{ needs.release.outputs.version }}.vsix
 
-      - name: Publish to marketplace
+      - name: Publish to marketplace (Open VSX)
         # https://github.com/HaaLeo/publish-vscode-extension/releases/tag/v1.2.0
         uses: HaaLeo/publish-vscode-extension@c1a0486c5a3eed24e8c21d4e37889a7c4c60c443
+        id: publishToOpenVSX
         with:
-          pat: ${{ secrets.PUBLISHER_KEY }}
-          registryUrl: https://marketplace.visualstudio.com
+          pat: ${{ secrets.PUBLISHER_KEY_OPENVSX }}
           extensionFile: ./vscode-github-actions-${{ needs.release.outputs.version }}.vsix
+      # - name: Publish to marketplace (VS Code Marketplace)
+      #   uses: HaaLeo/publish-vscode-extension@c1a0486c5a3eed24e8c21d4e37889a7c4c60c443
+      #   id: publishToVSCodeMarketplace
+      #   with:
+      #     pat: ${{ secrets.PUBLISHER_KEY_VSCODE }}
+      #     extensionFile: ./vscode-github-actions-${{ needs.release.outputs.version }}.vsix
